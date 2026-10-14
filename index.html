@@ -238,6 +238,14 @@ body:not(.moved) .cur,body:not(.moved) .ring{opacity:0}
 .meta dd{font-size:clamp(16px,1.5vw,20px);font-weight:600;margin-top:2px}
 .d-hero{border-radius:24px;overflow:hidden;aspect-ratio:16/8.5;position:relative}
 .d-hero .mock,.d-hero .cover{position:absolute;inset:0}
+.d-gallery{display:grid;grid-template-columns:1.826fr 1fr;gap:clamp(12px,1.6vw,20px);margin-top:clamp(12px,1.6vw,20px)}
+.d-gallery figure{margin:0;border-radius:24px;overflow:hidden;background:#eef0f6}
+.d-gallery img{display:block;width:100%;height:auto}
+.d-gallery.phones{grid-template-columns:repeat(4,1fr)}
+.d-gallery.phones.n5{grid-template-columns:repeat(5,1fr)}
+.d-gallery.phones.n3{grid-template-columns:repeat(3,1fr);max-width:900px;margin-left:auto;margin-right:auto}
+.d-gallery.phones figure{border-radius:clamp(16px,2.4vw,30px);box-shadow:0 0 0 1px #16161612,0 24px 48px -28px #0005}
+@media (max-width:760px){.d-gallery{grid-template-columns:1fr}.d-gallery.phones,.d-gallery.phones.n3,.d-gallery.phones.n5{grid-template-columns:repeat(2,1fr)}}
 .d-hero .ph{width:16%}.d-hero .ph.mid{width:19%}
 .d-body{display:grid;grid-template-columns:1fr 1.6fr;gap:40px;padding:clamp(48px,7vw,96px) 0 clamp(60px,8vw,110px)}
 .d-body h2{font-size:clamp(22px,2.2vw,30px);font-weight:700;letter-spacing:-.015em}
@@ -417,6 +425,31 @@ body:not(.moved) .cur,body:not(.moved) .ring{opacity:0}
   .rv,.split .c,.chips.pop span{opacity:1!important;transform:none!important}
   .loader{display:none}
 }
+
+
+/* Language switch + visits */
+.top-r{display:flex;align-items:center;gap:10px}
+.lang{display:inline-flex;background:var(--paper);border-radius:999px;padding:3px;box-shadow:0 0 0 1px var(--line)}
+.lang button{border:0;background:none;font:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--muted);padding:7px 10px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+@media (max-width:560px){.top .talk{display:none}}
+.legal{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+.visits{display:inline-flex;align-items:center;gap:6px;background:#ffffffb3;color:var(--ink-2);padding:5px 12px;border-radius:999px;font-weight:600}
+.visits[hidden]{display:none}
+.visits b{font-variant-numeric:tabular-nums;color:var(--ink)}
+.vdot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+/* Email chooser (desktop) */
+.mailx{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;background:#0006;opacity:0;pointer-events:none;transition:opacity .25s}
+.mailx.show{opacity:1;pointer-events:auto}
+.mailx-box{width:min(380px,100%);background:var(--paper);border-radius:24px;padding:22px;box-shadow:0 40px 80px -30px #0008;transform:translateY(14px) scale(.98);transition:transform .35s var(--ease)}
+.mailx.show .mailx-box{transform:none}
+.mailx-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.mailx-h b{font-size:18px;display:block}.mailx-h small{color:var(--muted);font-size:14px;word-break:break-all}
+.mailx-x{width:34px;height:34px;flex:none;border-radius:50%;border:1px solid #0001;background:var(--bg);cursor:pointer;font-size:18px;line-height:1;color:var(--ink)}
+.mailx-o{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;border-radius:14px;border:1px solid #16161614;background:var(--paper);color:var(--ink);font:inherit;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;margin-top:8px;transition:background .2s}
+.mailx-o:hover{background:var(--bg)}
+.mailx-o i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:800;color:#fff;flex:none}
 </style>
 </head>
 <body class="intro locked">
@@ -433,7 +466,7 @@ const DATA = {
   first: "Farid",
   last: "Ahmadov",
   role: "Flutter Engineer",
-  tagline: "<b>4+ years</b> shipping production apps for Android and iOS: e‑commerce, pharmacy, education, taxi and news. I turn product requirements into fast, reliable mobile experiences.",
+  tagline: "<b>4+ years</b> shipping production apps for Android and iOS: e‑commerce, pharmacy, education, taxi and news. I turn client requirements into fast, reliable mobile experiences.",
   photo: "farid.webp",
   available: "Available for New Project",
   email: "farid.ahmadov.93@gmail.com",
@@ -449,118 +482,208 @@ const DATA = {
   projects: [
     {
       id: "aloe", short: "Aloe+ Online Pharmacy",
-      title: "Aloe+ — online pharmacy & beauty store with home delivery",
+      title: "Aloe+ — online pharmacy and loyalty program with delivery across Baku",
       category: "Health", platform: "Android & iOS", service: "Mobile development",
       icon: "apps/aloe.webp", image: "", c1: "#1C4A4C", c2: "#4FBF8F",
       tags: ["Pharmacy", "E‑commerce", "Loyalty"],
-      lead: "The Aloe pharmacy chain in one app: order medicine and beauty products for home delivery in Baku, check stock at a chosen pharmacy and manage loyalty cards.",
+      lead: "The official app of the Aloe pharmacy chain. Customers order medicines, vitamins and beauty products with delivery in Baku or pick them up at a nearby pharmacy, keep all their loyalty cards in one place and earn extra cashback on every app order.",
       built: [
-        "Product catalog, search, ordering, delivery and self‑pickup flows",
-        "Pharmacy selection that shows which items are in stock at each location",
-        "Loyalty cards in one place, with balances, bonuses and a choice of card at checkout",
-        "Apple Pay checkout, deep links and delivery zones on Google Maps",
-        "New optical products category",
-        "Crash monitoring with Crashlytics and Sentry, plus Force Update"
+        "MultiCard: all loyalty cards in one place, with balances, bonuses and a choice of which card collects them at checkout",
+        "Pick a pharmacy and see what's in stock there before ordering",
+        "Home delivery across Baku or pickup from the nearest pharmacy, chosen on a map",
+        "Extra cashback on app orders, credited to the card right after payment",
+        "Order tracking from pharmacist approval to handover",
+        "Novo Optika category for optical products",
+        "Apple Pay, deep links, Crashlytics and Sentry monitoring, force update"
       ],
       stack: ["Flutter", "BLoC / Cubit", "Clean Architecture", "Dio", "1C ERP API", "Firebase", "Sentry"],
+      gallery: ["apps/aloe-1.webp", "apps/aloe-2.webp", "apps/aloe-3.webp", "apps/aloe-4.webp", "apps/aloe-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/aloe-onlayn-aptek/id6503368172", googlePlay: "https://play.google.com/store/apps/details?id=az.aloe" }
     },
     {
       id: "tenderyard", short: "TenderYard",
-      title: "TenderYard — AI‑powered marketplace for buyers and sellers",
+      title: "TenderYard — AI‑powered marketplace that connects buyers and sellers",
       category: "E‑commerce", platform: "Android & iOS", service: "Mobile development",
       icon: "apps/tenderyard.webp", image: "", c1: "#5A1E3B", c2: "#C04E86",
       tags: ["Marketplace", "AI", "Payments"],
-      lead: "A free marketplace where people post purchase requests and sales listings across 1,700+ categories, and the app matches buyers with sellers automatically.",
+      lead: "A free platform for sales listings and purchase requests in more than 1,700 categories. Instead of searching for weeks, buyers post what they need and the app connects them with matching sellers. Its motto says it best: what you're looking for will find you.",
       built: [
-        "Automatic matching and alerts between buyers and sellers",
-        "AI‑generated listings from one sentence or a photo",
-        "Voice and image search, with listings synced across languages",
-        "In‑app messenger with voice and video calls",
-        "Apple & Google In‑App Purchases, card and online payments, promo codes and bonuses"
+        "Automatic matching between purchase requests and listings, with instant notifications to both sides",
+        "AI creates a listing from one sentence, a photo or a voice note and picks the category itself",
+        "Search by voice, photo or text, saved filters and search history",
+        "Global search that also shows similar offers from marketplaces like Amazon",
+        "Short video listings (Reels) and automatic translation of listings into other languages",
+        "In‑app chat with voice and video calls, plus the TenderBot AI assistant",
+        "Apple and Google in‑app purchases, card payments, promo codes and bonuses"
       ],
       stack: ["Flutter", "Dart", "BLoC", "REST APIs", "WebSocket", "In‑App Purchase"],
+      gallery: ["apps/tenderyard-1.webp", "apps/tenderyard-2.webp", "apps/tenderyard-3.webp", "apps/tenderyard-4.webp", "apps/tenderyard-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/tenderyard/id6503719231", googlePlay: "https://play.google.com/store/apps/details?id=com.tenderyard.android.release" }
     },
     {
       id: "taxo-rider", short: "Taxo Rider",
-      title: "Taxo Rider — book a taxi in a few taps",
+      title: "Taxo Rider — the passenger app of Azerbaijan's national taxi brand",
       category: "Mobility", platform: "Android & iOS", service: "Mobile development",
       icon: "apps/taxo-rider.webp", image: "", c1: "#0F3557", c2: "#4AA3E0",
       tags: ["Taxi", "Google Maps", "Real‑time"],
-      lead: "The rider app of the Taxo taxi service in Azerbaijan: a simple ride‑ordering flow with bonuses and discounts.",
+      lead: "Taxo set out to give people in Azerbaijan a high‑quality national taxi service. The rider app keeps it simple: easy to order, easy to use, with bonuses and discounts along the way.",
       built: [
-        "Simple ride ordering with pickup and destination on the map",
-        "Live ride status and driver location",
-        "Bonuses and discounts for riders",
-        "Google Maps integration and address pinning"
+        "Order a ride by setting pickup and destination on the map and see the fare up front",
+        "Choose Economy or Comfort, pay by cash or card and apply coupon codes",
+        "Taxo wallet: top up your balance, save cards and see payment history",
+        "Book rides in advance, save favourite places and browse ride history",
+        "Follow the ride status and the driver's location live",
+        "Profile, notifications and settings in a clean, simple interface"
       ],
       stack: ["Flutter", "Dart", "BLoC", "Google Maps", "REST APIs", "WebSocket"],
+      gallery: ["apps/taxo-rider-1.webp", "apps/taxo-rider-2.webp", "apps/taxo-rider-3.webp", "apps/taxo-rider-4.webp", "apps/taxo-rider-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/taxo-rider/id6458830394", googlePlay: "https://play.google.com/store/apps/details?id=com.taxo.rider" }
     },
     {
       id: "taxo-driver", short: "Taxo Driver",
-      title: "Taxo Driver — the companion app for Taxo drivers",
+      title: "Taxo Driver — the driver app of Azerbaijan's national taxi brand",
       category: "Mobility", platform: "iOS", service: "Mobile development",
       icon: "apps/taxo-driver.webp", image: "", c1: "#123E66", c2: "#5BB0EA",
       tags: ["Taxi", "Driver app"],
-      lead: "The driver side of Taxo: receive and handle orders easily every day, with bonuses and discounts for drivers.",
+      lead: "The driver side of Taxo, built for long shifts: go online, get nearby orders, take the ride and keep an eye on earnings, with bonuses and discounts for drivers too.",
       built: [
-        "Incoming order handling and ride flow for drivers",
-        "Simple daily use with clear ride states",
-        "Driver bonuses and discounts",
-        "Real‑time updates between rider and driver apps"
+        "Go online or offline and set the radius for incoming orders",
+        "New orders on the map with pickup, destination and payment method",
+        "Ride details by date, with a way to report a problem",
+        "Earnings, wallet and ride history",
+        "Live sync with the rider app throughout the trip",
+        "Sign‑in and registration, profile, notifications and settings"
       ],
       stack: ["Flutter", "Dart", "BLoC", "Google Maps", "WebSocket"],
+      gallery: ["apps/taxo-driver-1.webp", "apps/taxo-driver-2.webp", "apps/taxo-driver-3.webp", "apps/taxo-driver-4.webp", "apps/taxo-driver-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/taxo-driver/id6453025125", googlePlay: "" }
     },
     {
       id: "anayam", short: "Anayam",
-      title: "Anayam — pregnancy tracker and doctor visits for expectant mothers",
+      title: "Anayam — a companion for every week of pregnancy",
       category: "Health", platform: "Android & iOS", service: "Mobile development",
       icon: "apps/anayam.webp", mono: "An", image: "", c1: "#6B2347", c2: "#F28AB2",
       tags: ["Health", "Pregnancy", "Telemedicine"],
-      lead: "A free app for expectant mothers that follows the pregnancy week by week and keeps doctor visits and medical records in one place.",
+      lead: "Created on the initiative of the Public Health and Reforms Center of Azerbaijan's Ministry of Health. Expectant mothers follow their pregnancy week by week, get daily advice, track their health and book doctor visits — all in one free app.",
       built: [
-        "Week‑by‑week pregnancy and baby development tracking with daily guidance",
-        "Due date calculated from the conception date",
-        "Weight, BMI and symptom tracking",
-        "Virtual or in‑person doctor appointments",
-        "Saved ultrasound images and medical records, plus a care and nutrition blog"
+        "Week‑by‑week development of the baby, with its size compared to a fruit",
+        "Due date calculator by conception date, last period, IVF or ultrasound",
+        "Weight, BMI and symptom tracking based on medical guidelines",
+        "Daily tips and a weekly blog on nutrition, breastfeeding, newborn care and exercise",
+        "Ultrasound images in 2D and 3D, with medical records kept in one place",
+        "Find a doctor by specialty and book an online or in‑person visit",
+        "Baby name ideas by country, with a favourites list"
       ],
       stack: ["Flutter", "Dart", "Bloc", "Cubit", "REST APIs"],
+      gallery: ["apps/anayam-1.webp", "apps/anayam-2.webp", "apps/anayam-3.webp", "apps/anayam-4.webp", "apps/anayam-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/anayam/id6740815265", googlePlay: "https://play.google.com/store/apps/details?id=com.aastudio.anayam.app&hl=en_US" }
     },
     {
       id: "md-simulyasiya", short: "MD Simulyasiya",
-      title: "MD Simulyasiya — clinical decision training for medical students",
+      title: "MD Simulyasiya — practise clinical decisions on virtual patients",
       category: "Education", platform: "Android & iOS", service: "Mobile development",
       icon: "apps/md-simulyasiya.webp", mono: "MD", image: "", c1: "#1E2A5E", c2: "#5BA3E0",
       tags: ["Education", "Medicine", "Simulation"],
-      lead: "Medical students practice clinical decisions on virtual patients in a safe, simulated setting.",
+      lead: "A free training app for medical students and future doctors. Users work through realistic clinical cases: read the patient's history and lab results, order tests, choose treatment and see how the patient responds — with no risk to a real person.",
       built: [
-        "Virtual patient cases with histories and lab results",
-        "Choosing diagnostic tests and planning treatment",
-        "Outcome feedback after each decision",
-        "Smooth case flow and animations on both platforms"
+        "Virtual patients with live vitals: heart rate, blood sugar, temperature and blood pressure",
+        "Covid‑19 cases to assess and rank by severity: moderate, moderate‑to‑severe and severe",
+        "Patient chart with vitals, hemodynamics, lab, microbiology, imaging and procedure results",
+        "ECG and body temperature shown as live charts",
+        "Ordering tests and treatment, with feedback on every decision",
+        "Training modules and learning materials for students just starting out"
       ],
       stack: ["Flutter", "Dart", "Bloc", "Provider", "REST APIs"],
+      gallery: ["apps/md-simulyasiya-1.webp", "apps/md-simulyasiya-2.webp", "apps/md-simulyasiya-3.webp", "apps/md-simulyasiya-4.webp", "apps/md-simulyasiya-5.webp"],
+      galleryLayout: "phones",
       links: { appStore: "https://apps.apple.com/az/app/md-simulyasiya/id6744737503", googlePlay: "https://play.google.com/store/apps/details?id=com.aastudio.mdsimulyasiyaapp&hl=en_US" }
     },
     {
       id: "ecourses", short: "ECourses",
-      title: "ECourses — distance learning on the ecourses portal",
+      title: "ECourses — the ecourses learning portal in your pocket",
       category: "Education", platform: "Android", service: "Mobile development",
       icon: "", wordmark: "apps/ecourses.webp", image: "", c1: "#F5F7FB", c2: "#3B6FD8", light: true,
       tags: ["Education", "E‑learning"],
-      lead: "A distance‑learning app that gives students access to courses on the ecourses portal, anytime.",
+      lead: "“Distance learning has become even easier.” The app brings the ecourses portal to the phone: browse courses by category, learn from video lessons at your own pace and get to know the mentors behind them.",
       built: [
-        "Course catalog and lessons from the ecourses portal",
-        "Learning progress across courses",
-        "REST API integration and responsive UI"
+        "Home screen with news, partners and fresh content",
+        "Courses grouped into categories: coding, design, marketing, business, health, finance and more",
+        "Popular courses with price, discounts, ratings and favourites",
+        "Video lessons organised into sections, with progress tracking and a full‑featured player",
+        "Mentor profiles with bio, courses, students and reviews"
       ],
       stack: ["Flutter", "Dart", "Bloc", "REST APIs"],
+      gallery: ["apps/ecourses-1.webp", "apps/ecourses-2.webp", "apps/ecourses-3.webp", "apps/ecourses-4.webp"],
+      galleryLayout: "phones",
       links: { appStore: "", googlePlay: "https://play.google.com/store/apps/details?id=com.aastudio.ecourses&hl=en_US" }
+    },
+    {
+      id: "chr", short: "CHR — Core Human Resources",
+      title: "CHR — internal HR app built for PASHA Bank",
+      category: "Enterprise", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/chr.webp", mono: "CHR", image: "", c1: "#141B45", c2: "#316EB6",
+      tags: ["HR", "Enterprise", "Banking"],
+      lead: "Core Human Resources moves everyday HR tasks at PASHA Bank from paper forms and email threads to the employee's phone: leave requests, payroll details and personal records, all in one secure app.",
+      built: [
+        "Remaining leave days at a glance and a new leave request in one tap",
+        "Requests by status — new, rejected, approved and resubmitted — with full details",
+        "Salary additions and deductions for each employment contract",
+        "Deduction breakdown: type, amount, period, total, paid and remaining",
+        "Personal profile with identity, contact and employment details",
+        "Secure sign‑in, dark interface in CHR colours, internal distribution only"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Secure Storage", "Push notifications"],
+      gallery: ["apps/chr-1.webp", "apps/chr-2.webp", "apps/chr-3.webp", "apps/chr-4.webp"],
+      galleryLayout: "phones",
+      links: { appStore: "", googlePlay: "" },
+      removed: true,
+      note: "Internal app for PASHA Bank employees, not published on the public stores."
+    },
+    {
+      id: "bazarix", short: "Bazarix",
+      title: "Bazarix — buy, sell and find services in one classifieds app",
+      category: "E‑commerce", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/bazarix.webp", mono: "Bz", image: "", c1: "#0B3B36", c2: "#1E9C8A",
+      tags: ["Classifieds", "Marketplace", "Messaging"],
+      lead: "A classifieds app for Azerbaijan covering furniture, real estate, services, electronics, home & garden and vehicles. Post a listing in a few steps, find what you need with filters and reach the seller by phone or chat.",
+      built: [
+        "Home screen with categories, the latest listings, recently viewed items and the most viewed cars, homes and electronics",
+        "Step‑by‑step listing creation that starts with picking a category",
+        "Search results with filters, sorting and saved searches",
+        "Listing page with photos, price, description, view count and the seller's profile",
+        "Call or message the seller straight from the listing and browse their other ads",
+        "Favourites, messages, notifications and listing reports"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "WebSocket", "Firebase"],
+      gallery: ["apps/bazarix-1.webp", "apps/bazarix-2.webp", "apps/bazarix-3.webp", "apps/bazarix-4.webp"],
+      galleryLayout: "phones",
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "amper", short: "Amper",
+      title: "Amper — every EV charger in Baku on one map",
+      category: "Mobility", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/amper.webp", mono: "A", image: "", c1: "#121212", c2: "#F7961D",
+      tags: ["EV charging", "Google Maps", "QR"],
+      lead: "An app for electric‑vehicle drivers in Baku. Chargers from different operators are shown on a single map, so drivers can check power and free ports, start a session in a couple of taps and get directions to the station.",
+      built: [
+        "Stations from multiple operators on one map, each with its own brand marker",
+        "Station card with address, distance, power (kW), time to 100% and free ports",
+        "Start charging right from the station card or by scanning the QR code on the charger",
+        "Search, filters and a list view of nearby stations",
+        "Directions to the station via Waze or Google Maps"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "Google Maps", "QR scanner", "REST APIs"],
+      gallery: ["apps/amper-1.webp", "apps/amper-2.webp", "apps/amper-3.webp"],
+      galleryLayout: "phones",
+      links: { appStore: "", googlePlay: "" },
+      removed: true
     },
     {
       id: "barsiba", short: "Barsiba",
@@ -568,14 +691,114 @@ const DATA = {
       category: "News", platform: "Android & iOS", service: "Mobile development",
       icon: "", image: "apps/barsiba.webp", c1: "#9FBF96", c2: "#4E7A45",
       tags: ["News", "Content"],
-      lead: "A news app for Türkiye with breaking news, world, sports and entertainment sections and a most‑read feed.",
+      lead: "A news app for readers in Türkiye: breaking news, world, sports and entertainment in clear category feeds, plus a list of the most‑read stories.",
       built: [
-        "Category feeds: breaking news, world, sports, entertainment",
-        "Most‑read stories and favorites",
-        "Article sharing and rich article pages",
-        "Shipped to both Google Play and the App Store"
+        "Category feeds: breaking news, world, sports and entertainment",
+        "Most‑read stories and saved articles",
+        "Clean article pages with easy sharing",
+        "Published on both Google Play and the App Store"
       ],
       stack: ["Flutter", "Dart", "Bloc", "REST APIs"],
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "ireli", short: "İrəli İctimai Birliyi",
+      title: "İrəli — the mobile home of the İrəli Public Union",
+      category: "Community", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/ireli.webp", mono: "İR", image: "", c1: "#2E1F7A", c2: "#7A60F0",
+      tags: ["Youth", "Community", "Radio & Podcasts"],
+      lead: "The official app of the İrəli Public Union, a youth organisation in Azerbaijan. Members keep up with projects, trainings and announcements, listen to the union's live radio and podcasts, and keep a record of every event and camp they've joined.",
+      built: [
+        "Home feed with announcements, projects, centres and news",
+        "Activities: trainings, meetings, intellectual games, a trainer database, healthy‑living tips and more",
+        "Live radio from iradio.az, podcasts and music in one player",
+        "Local, military‑patriotic and international project sections",
+        "Personal account with the member's profile and the events and camps they took part in"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Audio streaming", "Firebase"],
+      gallery: ["apps/ireli-screens.webp", "apps/ireli-promo.webp"],
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "finder", short: "Finder",
+      title: "Finder — find a restaurant nearby and book a table",
+      category: "Food & Dining", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/finder.webp", mono: "Fi", image: "", c1: "#5E0A10", c2: "#E8222C",
+      tags: ["Restaurants", "Google Maps", "Reservations"],
+      lead: "Food everywhere: Finder shows the restaurants around you on a map, lets you look through the menu before you go and book a free table straight from the restaurant's page.",
+      built: [
+        "Map of restaurants around your current location",
+        "Featured dishes and a restaurant list with walking and driving time",
+        "Restaurant page with photos, phone, address and a menu split into food, drinks, snacks and sauces",
+        "Visual floor plan: pick a free table and book it in a tap",
+        "Favourites, search and your bookings in the profile"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "Google Maps", "Geolocation", "REST APIs"],
+      gallery: ["apps/finder-1.webp", "apps/finder-2.webp", "apps/finder-3.webp", "apps/finder-4.webp"],
+      galleryLayout: "phones",
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "orxideya", short: "Orxideya",
+      title: "Orxideya — book bridal styling, hairdressers and beauty salons",
+      category: "Beauty", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/orxideya.webp", mono: "Or", image: "", c1: "#3A2484", c2: "#8B70F5",
+      tags: ["Beauty", "Bridal", "Booking"],
+      lead: "A beauty booking app for women. Find salons and stylists nearby and book bridal hair and makeup, a haircut, manicure or brow styling in a few taps — and get a reminder before the appointment.",
+      built: [
+        "Services: bridal styling, hairdresser, makeup, manicure, lashes, brows and hair colouring",
+        "Nearby salons with ratings, distance and search",
+        "Booking with date, time and the chosen services",
+        "My bookings: upcoming, completed and cancelled, with cancellation and e‑receipts",
+        "Push reminders before each appointment",
+        "Package deals, such as bridal hair and makeup together"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Google Maps", "Push notifications"],
+      gallery: ["apps/orxideya-1.webp", "apps/orxideya-2.webp", "apps/orxideya-3.webp"],
+      galleryLayout: "phones",
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "emiland", short: "Emiland",
+      title: "Emiland — the brand's mobile app",
+      category: "E‑commerce", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/emiland.webp", mono: "EM", image: "", c1: "#3B3123", c2: "#A88D62",
+      tags: ["Fashion", "E‑commerce", "Catalog"],
+      lead: "Emiland Stores has been making its products in Azerbaijan since 1991. The app mirrors the emiland.com design one‑to‑one, so customers get the same look and the same catalogue on the web and on their phone.",
+      built: [
+        "Mobile version that follows the emiland.com design pixel for pixel",
+        "Catalogue with categories and a dedicated fabrics section",
+        "Product pages with photo gallery, sizes and details",
+        "Cart, checkout and order history",
+        "Content in several languages, in sync with the website",
+        "One REST API shared with the web store"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Cached images"],
+      links: { appStore: "", googlePlay: "" },
+      removed: true
+    },
+    {
+      id: "raffle", short: "Raffle",
+      title: "Raffle — buy a ticket and win a car or a new phone",
+      category: "Entertainment", platform: "Android & iOS", service: "Mobile development",
+      icon: "apps/raffle.webp", mono: "R", image: "", c1: "#5A0F17", c2: "#E0303F",
+      tags: ["Raffles", "Payments", "Wallet"],
+      lead: "Your victory is closer than you think: users top up their wallet, buy tickets for live campaigns and enter prize draws for cars, smartphones and more — in three simple steps.",
+      built: [
+        "Live campaigns with prizes and a bar showing how many tickets are sold",
+        "In‑app wallet with balance in AZN and one‑tap ticket purchase",
+        "Personal tickets with ticket number and draw date",
+        "Winners feed and upcoming draws",
+        "Live draws, offers and a cart in the bottom menu",
+        "Onboarding that explains the three steps to take part"
+      ],
+      stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Payments", "Firebase"],
+      gallery: ["apps/raffle-1.webp", "apps/raffle-2.webp", "apps/raffle-3.webp"],
+      galleryLayout: "phones",
       links: { appStore: "", googlePlay: "" },
       removed: true
     }
@@ -601,6 +824,7 @@ const DATA = {
   certificates: ["Flutter Bloc State Management", "Technest Flutter Scholarship", "Flutter & Dart — The Complete Guide", "FastAPI — The Complete Course 2026"]
 };
 </script>
+<script src="i18n.js"></script>
 
 <div class="loader" id="loader" aria-hidden="true">
   <div class="l-top"><span>Farid Ahmadov</span><span>Portfolio ©2026</span></div>
@@ -618,7 +842,10 @@ const DATA = {
   <div class="wrap">
     <span class="avail"><i></i><span data-avail></span></span>
     <nav class="menu" aria-label="Main" id="menu"></nav>
-    <a class="btn btn-dark mag" href="#contact">Let's Talk <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    <div class="top-r">
+      <div class="lang" id="langSw" role="group" aria-label="Language"></div>
+      <a class="btn btn-dark mag talk" href="#contact"><span data-i18n="letsTalk">Let's Talk</span> <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
   </div>
 </header>
 
@@ -630,43 +857,43 @@ const DATA = {
       <div class="hero-left">
         <h2 id="role" style="--d:0"></h2>
         <p id="tagline" style="--d:1"></p>
-        <a class="btn btn-dark mag" style="--d:2" id="collab">Let's collaborate <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+        <a class="btn btn-dark mag" style="--d:2" id="collab"><span data-i18n="collab">Let's collaborate</span> <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
       </div>
       <div class="hero-right" id="heroSoc"></div>
-      <div class="scroll-ind"><i></i>Scroll</div>
+      <div class="scroll-ind"><i></i><span data-i18n="scroll">Scroll</span></div>
     </div>
   </section>
 
   <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
 
   <section class="sec work" id="work">
-    <div class="ghost" data-par>Portfolio</div>
+    <div class="ghost" data-par data-i18n="ghostWork">Portfolio</div>
     <div class="wrap">
-      <div class="sec-head center"><h2 class="sec-title split">/Selected Work</h2></div>
+      <div class="sec-head center"><h2 class="sec-title split" data-i18n="selWork">/Selected Work</h2></div>
       <div class="toolbar rv">
         <div class="tabs" role="tablist" aria-label="Filter projects" id="tabs"><span class="pill" id="tabPill"></span></div>
-        <a class="btn btn-light mag" href="https://github.com/freddyMobile" target="_blank" rel="noopener">View GitHub <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+        <a class="btn btn-light mag" href="https://github.com/freddyMobile" target="_blank" rel="noopener"><span data-i18n="viewGithub">View GitHub</span> <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
       </div>
       <div class="grid-work" id="grid"></div>
     </div>
   </section>
 
   <section class="sec service" id="service">
-    <div class="ghost left" data-par>Service</div>
+    <div class="ghost left" data-par data-i18n="ghostService">Service</div>
     <div class="wrap">
-      <div class="sec-head"><h2 class="sec-title split">/Service</h2></div>
+      <div class="sec-head"><h2 class="sec-title split" data-i18n="service">/Service</h2></div>
       <div class="srv-list" id="srvList"></div>
     </div>
   </section>
 
   <section class="sec exp" id="experience">
-    <div class="ghost left" data-par>Experience</div>
+    <div class="ghost left" data-par data-i18n="ghostExp">Experience</div>
     <div class="wrap">
-      <div class="sec-head"><h2 class="sec-title split">/Experience</h2><span class="yrs rv"><b id="yrsNum">0</b>+ years of experience</span></div>
+      <div class="sec-head"><h2 class="sec-title split" data-i18n="experience">/Experience</h2><span class="yrs rv"><b id="yrsNum">0</b><span data-i18n="yearsExp">+ years of experience</span></span></div>
       <div class="jobs" id="jobs"></div>
       <div class="extras">
-        <div class="rv"><h4>Skills</h4><div class="chips pop" id="skills"></div></div>
-        <div class="rv" style="--rd:.1s"><h4>Certificates</h4><div class="chips pop" id="certs"></div></div>
+        <div class="rv"><h4 data-i18n="skills">Skills</h4><div class="chips pop" id="skills"></div></div>
+        <div class="rv" style="--rd:.1s"><h4 data-i18n="certs">Certificates</h4><div class="chips pop" id="certs"></div></div>
       </div>
     </div>
   </section>
@@ -675,21 +902,21 @@ const DATA = {
     <span class="blob b1"></span><span class="blob b2"></span>
     <div class="wrap inner">
       <span class="avail rv"><i></i><span data-avail></span></span>
-      <h2 class="split" id="ctaTitle">Have a project in mind?</h2>
-      <p class="rv" style="--rd:.16s">Freelance work, a full‑time role or an app that needs a second pair of hands. Tell me what you're building and I'll reply within a day.</p>
+      <h2 class="split" id="ctaTitle" data-i18n="ctaTitle">Have a project in mind?</h2>
+      <p class="rv" style="--rd:.16s" data-i18n="ctaText">Freelance work, a full‑time role or an app that needs a second pair of hands. Tell me what you're building and I'll reply within a day.</p>
       <div class="rv" style="--rd:.24s">
-        <a class="btn btn-dark mag" id="contactBtn">Contact Me <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
-        <span class="mail"><span id="mailText"></span><button class="copy" id="copyBtn" type="button">Copy</button></span>
+        <a class="btn btn-dark mag" id="contactBtn"><span data-i18n="contactMe">Contact Me</span> <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+        <span class="mail"><span id="mailText"></span><button class="copy" id="copyBtn" type="button" data-i18n="copy">Copy</button></span>
       </div>
       <div class="foot-row rv" id="footRow"></div>
-      <div class="legal" id="legal"></div>
+      <div class="legal"><span id="legal"></span><span class="visits" id="visits" hidden><span class="vdot"></span><b id="visitsNum"></b> <span data-i18n="visits">visits</span></span></div>
     </div>
   </section>
 </main>
 
 <div class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" tabindex="-1">
   <div class="d-top">
-    <button class="back" id="back" type="button"><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Back</button>
+    <button class="back" id="back" type="button"><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 8H3M7 4 3 8l4 4"/></svg><span data-i18n="back">Back</span></button>
     <span class="avail"><i></i><span data-avail></span></span>
   </div>
   <div class="wrap" id="dContent"></div>
@@ -715,6 +942,11 @@ const ICONS = {
   em: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>'
 };
 const full = `${DATA.first} ${DATA.last}`;
+/* ---------- Language ---------- */
+document.querySelectorAll('[data-i18n]').forEach(el => { if (T[el.dataset.i18n]) el.textContent = T[el.dataset.i18n]; });
+$('langSw').setAttribute('aria-label', T.lang);
+$('langSw').innerHTML = LANGS.map(l => `<button type="button" lang="${l}" aria-pressed="${l === LANG}">${l.toUpperCase()}</button>`).join('');
+$('langSw').addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.lang !== LANG) setLang(b.lang); });
 const ext = u => /^https?:/.test(u);
 
 /* ---------- Mockups ---------- */
@@ -789,17 +1021,17 @@ const coCard = j => j.logo
 
 /* ---------- Header & hero ---------- */
 document.querySelectorAll('[data-avail]').forEach(s => s.textContent = DATA.available);
-const navItems = [['Work', '#work', DATA.projects.length], ['Service', '#service', DATA.services.length], ['Experience', '#experience', DATA.years + '+'], ['Contact', '#contact', null]];
+const navItems = [[T.navWork, '#work', DATA.projects.length], [T.navService, '#service', DATA.services.length], [T.navExp, '#experience', DATA.years + '+'], [T.navContact, '#contact', null]];
 $('menu').innerHTML = navItems.map(([t, h, n]) => `<a href="${h}"><span class="t">${t}${n != null ? `<sup>(${n})</sup>` : ''}</span><span class="t" aria-hidden="true">${t}${n != null ? `<sup>(${n})</sup>` : ''}</span></a>`).join('');
 let ci = 0;
 const word = (w, cls) => `<span class="w ${cls}">${[...w].map(ch => `<span class="ch" style="--i:${ci++}">${esc(ch)}</span>`).join('')}</span>`;
 $('name').innerHTML = word(DATA.first, 'outline') + word(DATA.last, 'solid');
 $('name').setAttribute('aria-label', full);
 $('portrait').src = DATA.photo;
-$('portrait').alt = `Portrait of ${full}`;
+$('portrait').alt = `${T.portraitOf} ${full}`;
 $('role').textContent = DATA.role;
 $('tagline').innerHTML = DATA.tagline;
-$('collab').href = `mailto:${DATA.email}?subject=${encodeURIComponent("Let's collaborate")}`;
+$('collab').href = `mailto:${DATA.email}?subject=${encodeURIComponent(T.mailSubject)}`;
 const socHtml = (s, d) => `<a class="soc mag" href="${esc(s.url)}" ${ext(s.url) ? 'target="_blank" rel="noopener"' : ''} ${d != null ? `style="--d:${d}"` : ''}>${ICONS[s.icon] || ''}${esc(s.name)}</a>`;
 $('heroSoc').innerHTML = DATA.socials.map((s, k) => socHtml(s, k)).join('');
 
@@ -808,10 +1040,10 @@ const mq = DATA.marquee.map(t => `<span>${esc(t)}<i></i></span>`).join('');
 $('track').innerHTML = mq + mq + mq + mq;
 
 /* ---------- Work ---------- */
-const cats = ['All', ...new Set(DATA.projects.map(p => p.category))];
+const cats = [T.all, ...new Set(DATA.projects.map(p => p.category))];
 $('tabs').insertAdjacentHTML('beforeend', cats.map((t, k) => `<button role="tab" aria-selected="${k === 0}" data-f="${esc(t)}">${esc(t)}</button>`).join(''));
 $('grid').innerHTML = DATA.projects.map((p, k) => `
-  <button class="card rv zoom" style="--rd:${(k % 2) * .12}s" data-id="${esc(p.id)}" data-type="${esc(p.category)}" data-cursor="Open" aria-label="Open project: ${esc(p.short)}">
+  <button class="card rv zoom" style="--rd:${(k % 2) * .12}s" data-id="${esc(p.id)}" data-type="${esc(p.category)}" data-cursor="${esc(T.open)}" aria-label="${esc(T.openProject)}: ${esc(p.short)}">
     <div class="shot" style="--c1:${p.c1}">${cover(p)}<span class="open" aria-hidden="true">${ARROW}</span></div>
     <div class="card-body"><h3>${esc(p.title)}</h3><div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div></div>
   </button>`).join('');
@@ -822,7 +1054,7 @@ $('tabs').addEventListener('click', e => {
   movePill(b);
   const f = b.dataset.f;
   document.querySelectorAll('.card').forEach(c => {
-    const show = f === 'All' || c.dataset.type === f;
+    const show = f === T.all || c.dataset.type === f;
     c.classList.toggle('hidden', !show);
     if (show) { c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
   });
@@ -834,17 +1066,17 @@ function openSheet(p, card){
   sheetCard = card; sheetFrom = document.activeElement;
   const st = (url, k, icon, small, big) => url
     ? `<a class="store" style="--k:${k}" href="${esc(url)}" target="_blank" rel="noopener">${icon}<span><small>${small}</small><b>${big}</b></span></a>`
-    : `<span class="store off" style="--k:${k}" aria-disabled="true">${icon}<span><small>Link coming soon</small><b>${big}</b></span></span>`;
+    : `<span class="store off" style="--k:${k}" aria-disabled="true">${icon}<span><small>${T.linkSoon}</small><b>${big}</b></span></span>`;
   $('sheet').innerHTML = `
     <div class="s-cover" style="--c1:${p.c1}">${cover(p)}<button class="s-close" id="sClose" type="button" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2"><path d="M2 2l10 10M12 2 2 12"/></svg></button></div>
     <div class="s-head"><span class="s-icon" style="--c2:${p.c2}">${p.icon ? `<img src="${esc(p.icon)}" alt="" data-m="${esc(p.mono || p.short.slice(0, 2))}" referrerpolicy="no-referrer" ${FB}>` : esc(p.mono || p.short.slice(0, 2))}</span>
       <div><h3 id="sTitle">${esc(p.short)}</h3><small>${esc(p.category)} · ${esc(p.platform)}</small></div></div>
     <p class="s-text">${esc(p.lead)}</p>
-    ${p.removed ? `<div class="s-note"><i></i>This app is no longer available on the stores.</div>` : `<div class="stores">
-      ${p.links.appStore ? st(p.links.appStore, 0, APPLE, 'Download on the', 'App Store') : ''}
-      ${p.links.googlePlay ? st(p.links.googlePlay, 1, PLAY, 'Get it on', 'Google Play') : ''}
+    ${p.removed ? `<div class="s-note"><i></i>${esc(p.note || T.removed)}</div>` : `<div class="stores">
+      ${p.links.appStore ? st(p.links.appStore, 0, APPLE, T.downloadOn, 'App Store') : ''}
+      ${p.links.googlePlay ? st(p.links.googlePlay, 1, PLAY, T.getItOn, 'Google Play') : ''}
     </div>`}
-    <a class="s-more" href="#project/${esc(p.id)}" id="sMore">Project details ${ARROW}</a>`;
+    <a class="s-more" href="#project/${esc(p.id)}" id="sMore">${T.projectDetails} ${ARROW}</a>`;
   $('sheetWrap').classList.add('show');
   $('ring').classList.remove('label', 'hover');
   document.body.classList.add('locked');
@@ -903,12 +1135,33 @@ $('certs').innerHTML = DATA.certificates.map((s, k) => `<span style="--k:${k}">$
 $('contactBtn').href = `mailto:${DATA.email}`;
 $('mailText').textContent = DATA.email;
 $('copyBtn').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(DATA.email); $('copyBtn').textContent = 'Copied ✓'; }
-  catch { $('copyBtn').textContent = 'Select to copy'; }
-  setTimeout(() => $('copyBtn').textContent = 'Copy', 1600);
+  try { await navigator.clipboard.writeText(DATA.email); $('copyBtn').textContent = T.copied; }
+  catch { $('copyBtn').textContent = T.selectCopy; }
+  setTimeout(() => $('copyBtn').textContent = T.copy, 1600);
 });
 $('footRow').innerHTML = `<span class="me-pill"><img src="${esc(DATA.photo)}" alt="">${esc(full)}</span>` + DATA.socials.filter(s => s.icon !== 'em').map(s => socHtml(s)).join('');
 $('legal').textContent = `© ${new Date().getFullYear()} ${full}`;
+
+/* ---------- Visits counter ----------
+   Counts one visit per browser session on the live site only (not in previews).
+   Add your custom domain to COUNT_HOSTS when you connect it. */
+(function(){
+  const COUNT_HOSTS = ['freddymobile.github.io', 'faridsoftdev.com', 'www.faridsoftdev.com'];
+  const NS = 'faridahmadov-portfolio', KEY = 'visits';
+  const live = COUNT_HOSTS.includes(location.hostname);
+  let done = false; try { done = sessionStorage.getItem('visitCounted') === '1'; } catch (e) {}
+  const act = live && !done ? 'hit' : 'get';
+  fetch(`https://abacus.jasoncameron.dev/${act}/${NS}/${KEY}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(d => {
+      if (typeof d.value !== 'number') return;
+      if (act === 'hit') { try { sessionStorage.setItem('visitCounted', '1'); } catch (e) {} }
+      $('visitsNum').textContent = d.value.toLocaleString({ ru: 'ru-RU', az: 'az-AZ' }[LANG] || 'en-US');
+      $('visits').title = T.visitsLabel;
+      $('visits').hidden = false;
+    })
+    .catch(() => {});
+})();
 
 /* ---------- Split text ---------- */
 document.querySelectorAll('.split').forEach(el => {
@@ -956,7 +1209,7 @@ if (fine && !reduce) {
     mx = e.clientX; my = e.clientY; document.body.classList.add('moved');
     c.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
     const t = e.target.closest ? e.target : document.body;
-    const lab = t.closest('[data-cursor="Open"]');
+    const lab = t.closest('.card[data-cursor]');
     const hov = t.closest('a,button,[tabindex],.srv,.job');
     r.classList.toggle('label', !!lab);
     r.classList.toggle('hover', !lab && !!hov);
@@ -992,22 +1245,23 @@ function renderDetail(p){
         <div class="tags rv2" style="--d:0;margin-top:0">${p.tags.map(t => `<span class="tag" style="background:#fff">${esc(t)}</span>`).join('')}</div>
         <h1 id="dTitle" class="rv2" style="--d:1">${esc(p.short)}</h1>
         <p class="lead rv2" style="--d:2">${esc(p.lead)}</p>
-        <div class="d-actions rv2" style="--d:3">${store}<a class="btn btn-light" href="mailto:${esc(DATA.email)}?subject=${encodeURIComponent(p.short)}">Contact Me</a></div>
+        <div class="d-actions rv2" style="--d:3">${store}<a class="btn btn-light" href="mailto:${esc(DATA.email)}?subject=${encodeURIComponent(p.short)}">${T.contactMe}</a></div>
       </div>
       <dl class="meta">
-        <div class="rv2" style="--d:2"><dt>Platform</dt><dd>${esc(p.platform)}</dd></div>
-        <div class="rv2" style="--d:3"><dt>Category</dt><dd>${esc(p.category)}</dd></div>
-        <div class="rv2" style="--d:4"><dt>Service</dt><dd>${esc(p.service)}</dd></div>
+        <div class="rv2" style="--d:2"><dt>${T.platform}</dt><dd>${esc(p.platform)}</dd></div>
+        <div class="rv2" style="--d:3"><dt>${T.category}</dt><dd>${esc(p.category)}</dd></div>
+        <div class="rv2" style="--d:4"><dt>${T.serviceL}</dt><dd>${esc(p.service)}</dd></div>
       </dl>
     </div>
     <div class="d-hero rv2" style="--d:4">${cover(p)}</div>
+    ${p.gallery && p.gallery.length ? `<div class="d-gallery${p.galleryLayout === 'phones' ? ' phones' + (p.gallery.length === 3 ? ' n3' : p.gallery.length === 5 ? ' n5' : '') : ''} rv2" style="--d:5">${p.gallery.map(g => `<figure><img src="${esc(g)}" alt="${esc(p.short)} ${esc(T.screenshot)}" loading="lazy"></figure>`).join('')}</div>` : ''}
     <div class="d-body">
-      <div class="rv2" style="--d:5"><h2>Key features</h2><div class="d-stack">${p.stack.map(s => `<span class="tag" style="background:#fff">${esc(s)}</span>`).join('')}</div></div>
+      <div class="rv2" style="--d:5"><h2>${T.keyFeatures}</h2><div class="d-stack">${p.stack.map(s => `<span class="tag" style="background:#fff">${esc(s)}</span>`).join('')}</div></div>
       <ol class="d-list rv2" style="--d:6">${p.built.map((b, k) => `<li><span>${String(k + 1).padStart(2, '0')}</span>${esc(b)}</li>`).join('')}</ol>
     </div>
-    <div class="d-next"><span><small>Get the app</small><b>${esc(p.short)}</b></span>
-      ${p.removed ? `<div class="s-note" style="margin:0"><i></i>This app is no longer available on the stores.</div>`
-        : `<div class="d-stores">${p.links.appStore ? `<a class="store" style="--k:0;opacity:1;transform:none" href="${esc(p.links.appStore)}" target="_blank" rel="noopener">${APPLE}<span><small>Download on the</small><b>App Store</b></span></a>` : ''}${p.links.googlePlay ? `<a class="store" style="--k:1;opacity:1;transform:none" href="${esc(p.links.googlePlay)}" target="_blank" rel="noopener">${PLAY}<span><small>Get it on</small><b>Google Play</b></span></a>` : ''}</div>`}
+    <div class="d-next"><span><small>${T.getApp}</small><b>${esc(p.short)}</b></span>
+      ${p.removed ? `<div class="s-note" style="margin:0"><i></i>${esc(p.note || T.removed)}</div>`
+        : `<div class="d-stores">${p.links.appStore ? `<a class="store" style="--k:0;opacity:1;transform:none" href="${esc(p.links.appStore)}" target="_blank" rel="noopener">${APPLE}<span><small>${T.downloadOn}</small><b>App Store</b></span></a>` : ''}${p.links.googlePlay ? `<a class="store" style="--k:1;opacity:1;transform:none" href="${esc(p.links.googlePlay)}" target="_blank" rel="noopener">${PLAY}<span><small>${T.getItOn}</small><b>Google Play</b></span></a>` : ''}</div>`}
     </div>`;
 }
 function route(){
@@ -1088,7 +1342,8 @@ function startIntro(){
   });
   onScroll(); route();
 }
-if (reduce) { $('loader').remove(); document.body.classList.remove('intro', 'locked'); movePill($('tabs').querySelector('button')); onScroll(); route(); }
+let skipLoader = false; try { skipLoader = sessionStorage.getItem('skipLoader') === '1'; sessionStorage.removeItem('skipLoader'); } catch (e) {}
+if (reduce || skipLoader) { $('loader').remove(); document.body.classList.remove('intro', 'locked'); movePill($('tabs').querySelector('button')); onScroll(); route(); }
 else {
   const words = ['Hello', 'Salam', 'Merhaba', 'Привет', 'Flutter'];
   const lw = $('lWords'), ln = $('lNum'), lb = $('lBar');
@@ -1113,6 +1368,51 @@ else {
   })(t0);
 }
 addEventListener('resize', () => { const b = $('tabs').querySelector('[aria-selected="true"]'); if (b) movePill(b); });
+</script>
+
+<div class="mailx" id="mailx" role="dialog" aria-modal="true" aria-labelledby="mailxT">
+  <div class="mailx-box">
+    <div class="mailx-h"><div><b id="mailxT" data-i18n="mailTitle">Send me an email</b><small id="mailxE"></small></div><button class="mailx-x" id="mailxX" type="button" aria-label="Close">×</button></div>
+    <a class="mailx-o" id="mxGmail" target="_blank" rel="noopener"><i style="background:#EA4335">G</i><span data-i18n="mailGmail">Open in Gmail</span></a>
+    <a class="mailx-o" id="mxOutlook" target="_blank" rel="noopener"><i style="background:#0F6CBD">O</i><span data-i18n="mailOutlook">Open in Outlook</span></a>
+    <a class="mailx-o" id="mxApp"><i style="background:#161616">@</i><span data-i18n="mailApp">Open mail app</span></a>
+    <button class="mailx-o" id="mxCopy" type="button"><i style="background:#22A06B">⧉</i><span>Copy email address</span></button>
+  </div>
+</div>
+<script>
+(function(){
+  const box = document.getElementById('mailx');
+  const mobile = matchMedia('(hover:none),(pointer:coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  let last = null;
+  function open(href){
+    const u = new URL(href);
+    const to = decodeURIComponent(u.pathname), subj = u.searchParams.get('subject') || '';
+    const q = encodeURIComponent(subj);
+    document.getElementById('mailxE').textContent = to;
+    document.getElementById('mxGmail').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${q}`;
+    document.getElementById('mxOutlook').href = `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(to)}&subject=${q}`;
+    document.getElementById('mxApp').href = href;
+    const c = document.querySelector('#mxCopy span'); c.textContent = T.mailCopy;
+    document.getElementById('mxCopy').onclick = async () => {
+      try { await navigator.clipboard.writeText(to); }
+      catch (e) { const t = document.createElement('textarea'); t.value = to; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove(); }
+      c.textContent = T.copied;
+    };
+    last = document.activeElement;
+    box.classList.add('show');
+    setTimeout(() => document.getElementById('mailxX').focus(), 50);
+  }
+  function close(){ box.classList.remove('show'); if (last) last.focus({ preventScroll: true }); }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="mailto:"]');
+    if (!a || a.id === 'mxApp' || mobile) return;
+    e.preventDefault(); e.stopPropagation(); open(a.href);
+  }, true);
+  document.getElementById('mailxX').addEventListener('click', close);
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  box.querySelectorAll('a.mailx-o').forEach(a => a.addEventListener('click', () => setTimeout(close, 150)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && box.classList.contains('show')) { e.stopImmediatePropagation(); close(); } }, true);
+})();
 </script>
 </body>
 </html>
